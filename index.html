@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SAHI_FR | Profile</title>
+
+<link rel="icon" type="image/png" href="https://img.icons8.com/ios-filled/50/ffffff/user-male-circle.png">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    background-color: #000;
+    overflow: hidden;
+    color: white;
+}
+
+/* CLICK TO ENTER OVERLAY */
+#overlay {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background-color: #000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    cursor: pointer;
+    transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
+}
+#overlay.hidden {
+    opacity: 0;
+    visibility: hidden;
+    transform: scale(1.2);
+}
+#overlay p {
+    font-size: 11px;
+    letter-spacing: 6px;
+    text-transform: uppercase;
+    font-weight: 300;
+    color: #fff;
+    animation: pulse 2.5s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 0.2; }
+    50% { opacity: 0.8; }
+}
+
+/* BACKGROUND (Dimmed for better focus) */
+body::before {
+    content: "";
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: url('https://i.postimg.cc/MGXH1skt/60467_shama.gif') no-repeat center center/cover;
+    filter: blur(10px) brightness(0.4);
+    transform: scale(1.1);
+    z-index: -1;
+}
+
+/* DARKER GLASS CARD */
+.glass-card {
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(25px);
+    -webkit-backdrop-filter: blur(25px);
+    width: 340px;
+    padding: 40px 25px;
+    border-radius: 30px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    text-align: center;
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.9);
+    animation: cardEntry 1.2s ease-out;
+}
+
+@keyframes cardEntry {
+    from { opacity: 0; transform: translateY(40px) scale(0.95); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.pfp {
+    width: 110px;
+    height: 110px;
+    border-radius: 50%;
+    background: url('https://i.postimg.cc/7YsySqx7/3484_jmiie_sun.gif') no-repeat center center/cover;
+    border: 2px solid rgba(255, 255, 255, 0.15);
+    margin: 0 auto 20px;
+    transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+.pfp:hover { transform: scale(1.08) rotate(3deg); border-color: #fff; }
+
+h1 { font-size: 24px; font-weight: 400; letter-spacing: 2px; margin-bottom: 5px; }
+.location { font-size: 11px; text-transform: uppercase; letter-spacing: 2px; color: rgba(255, 255, 255, 0.4); margin-bottom: 25px; }
+
+/* DISCORD SECTION */
+.discord-status-card {
+    background: rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 20px;
+    padding: 15px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 25px;
+    text-align: left;
+    cursor: pointer;
+    transition: 0.3s;
+}
+.discord-status-card:hover { background: rgba(255, 255, 255, 0.05); transform: translateY(-2px); }
+.discord-avatar-wrapper { position: relative; width: 50px; height: 50px; }
+#discord-pfp { width: 100%; height: 100%; border-radius: 50%; background: #111; }
+.dot { position: absolute; bottom: 1px; right: 1px; width: 12px; height: 12px; border-radius: 50%; border: 2px solid #000; }
+.online { background: #43b581; box-shadow: 0 0 10px #43b581; }
+.idle { background: #faa61a; }
+.dnd { background: #f04747; }
+.offline { background: #747f8d; }
+.d-name { font-size: 13px; font-weight: 600; color: #fff; }
+.d-status { font-size: 11px; color: rgba(255,255,255,0.4); margin-top: 2px; }
+
+/* SOCIAL GRID */
+.social-grid { display: flex; justify-content: center; gap: 15px; margin-bottom: 30px; flex-wrap: wrap; }
+.social-grid a { color: rgba(255,255,255,0.5); font-size: 19px; transition: 0.3s; }
+.social-grid a:hover { color: #fff; transform: translateY(-3px); }
+
+/* MUSIC PLAYER */
+.music-bar {
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 15px;
+    padding: 15px;
+}
+.visualizer { display: flex; align-items: flex-end; gap: 2px; height: 10px; margin-left: 8px; }
+.v-bar { width: 2px; background: #fff; height: 100%; transform-origin: bottom; opacity: 0.3; }
+.playing .v-bar { animation: visualize 0.8s ease-in-out infinite alternate; opacity: 1; }
+.v-bar:nth-child(2) { animation-delay: 0.2s; }
+.v-bar:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes visualize {
+    0% { transform: scaleY(0.4); }
+    100% { transform: scaleY(1.2); }
+}
+
+.track-line { height: 2px; width: 120px; background: rgba(255,255,255,0.1); border-radius: 10px; margin-top: 6px; overflow: hidden; }
+#progress-fill { height: 100%; width: 0%; background: #fff; }
+
+.volume-slider { -webkit-appearance: none; width: 100%; height: 2px; background: rgba(255,255,255,0.1); outline: none; }
+.volume-slider::-webkit-slider-thumb { -webkit-appearance: none; width: 8px; height: 8px; background: #fff; border-radius: 50%; cursor: pointer; }
+</style>
+</head>
+
+<body>
+
+<div id="overlay" onclick="enterSite()">
+    <p>CLICK TO ENTER</p>
+</div>
+
+<div class="glass-card">
+    <div class="pfp"></div>
+    <h1>SAHI_FR</h1>
+    <p class="location"><i class="fa-solid fa-location-dot"></i> Sri Lanka</p>
+
+    <div class="discord-status-card" id="discordCard">
+        <div class="discord-avatar-wrapper">
+            <img id="discord-pfp" src="">
+            <div id="status-dot" class="dot offline"></div>
+        </div>
+        <div>
+            <p id="discord-name" class="d-name">@_sahix</p>
+            <p id="discord-status" class="d-status">Loading status...</p>
+        </div>
+    </div>
+
+    <div class="social-grid">
+        <a href="https://buymeacoffee.com/sahi_fr" target="_blank"><i class="fa-solid fa-mug-hot"></i></a>
+        <a href="https://www.youtube.com/@AMOsahii" target="_blank"><i class="fa-brands fa-youtube"></i></a>
+        <a href="https://github.com/sahix67" target="_blank"><i class="fa-brands fa-github"></i></a>
+        <a href="https://www.tiktok.com/@sahifr" target="_blank"><i class="fa-brands fa-tiktok"></i></a>
+        <a href="https://snapchat.com/t/vpZlEXpk" target="_blank"><i class="fa-brands fa-snapchat"></i></a>
+        <a href="https://wa.me/94767284155" target="_blank"><i class="fa-brands fa-whatsapp"></i></a>
+    </div>
+
+    <div class="music-bar" id="musicContainer">
+        <div style="display: flex; justify-content: space-between; align-items: center; width: 100%; margin-bottom: 12px;">
+            <div style="display: flex; flex-direction: column; align-items: flex-start;">
+                <div style="display: flex; align-items: center;">
+                    <p style="font-size: 10px; font-weight: 600; letter-spacing: 0.5px; color: rgba(255,255,255,0.9);">404: The Chill Guy Has Been Found</p>
+                    <div class="visualizer">
+                        <div class="v-bar"></div><div class="v-bar"></div><div class="v-bar"></div>
+                    </div>
+                </div>
+                <div class="track-line"><div id="progress-fill"></div></div>
+            </div>
+            <i id="play-icon" class="fa-solid fa-play" style="cursor: pointer; font-size: 13px;" onclick="toggleMusic()"></i>
+        </div>
+        <div style="display:flex; align-items:center; gap:10px;">
+            <i class="fa-solid fa-volume-low" style="font-size: 10px; opacity:0.3;"></i>
+            <input type="range" id="volumeSlider" class="volume-slider" min="0" max="1" step="0.01" value="1">
+            <i class="fa-solid fa-volume-high" style="font-size: 10px; opacity:0.3;"></i>
+        </div>
+    </div>
+
+    <audio id="myAudio" src="https://files.catbox.moe/85osku.mp3" loop></audio>
+</div>
+
+<script>
+const audio = document.getElementById("myAudio");
+const playIcon = document.getElementById("play-icon");
+const musicContainer = document.getElementById("musicContainer");
+
+/* TAB TITLE */
+let docTitle = document.title;
+window.addEventListener("blur", () => { document.title = "404: Chill Guy Missing..."; });
+window.addEventListener("focus", () => { document.title = docTitle; });
+
+function enterSite() {
+    document.getElementById("overlay").classList.add("hidden");
+    audio.play();
+    musicContainer.classList.add("playing");
+    playIcon.classList.replace("fa-play", "fa-pause");
+}
+
+function toggleMusic() {
+    if (audio.paused) {
+        audio.play();
+        playIcon.classList.replace("fa-play", "fa-pause");
+        musicContainer.classList.add("playing");
+    } else {
+        audio.pause();
+        playIcon.classList.replace("fa-pause", "fa-play");
+        musicContainer.classList.remove("playing");
+    }
+}
+
+document.getElementById("volumeSlider").addEventListener("input", (e) => { audio.volume = e.target.value; });
+audio.ontimeupdate = () => { document.getElementById("progress-fill").style.width = (audio.currentTime / audio.duration) * 100 + "%"; };
+
+/* DISCORD API */
+async function updateDiscord() {
+    try {
+        const res = await fetch(`https://api.lanyard.rest/v1/users/739005941261008897`);
+        const { data } = await res.json();
+        document.getElementById('discord-pfp').src = `https://cdn.discordapp.com/avatars/739005941261008897/${data.discord_user.avatar}.png`;
+        document.getElementById('status-dot').className = `dot ${data.discord_status}`;
+        let statusText = "Chilling";
+        if (data.activities.length > 0) {
+            const act = data.activities.find(x => x.type === 4) || data.activities[0];
+            statusText = act.state || act.name;
+        }
+        document.getElementById('discord-status').innerText = statusText;
+    } catch (e) { console.log(e); }
+}
+updateDiscord();
+setInterval(updateDiscord, 15000);
+
+/* COPY DISCORD */
+document.getElementById("discordCard").addEventListener("click", () => {
+    navigator.clipboard.writeText("_sahix");
+    const status = document.getElementById("discord-status");
+    const original = status.innerText;
+    status.innerText = "Username Copied!";
+    setTimeout(() => { status.innerText = original; }, 2000);
+});
+</script>
+
+</body>
+</html>
